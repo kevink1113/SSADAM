@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Search
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+
+    <form method="get" action="{% url "posts:search" %}" class="search flex items-center mb-6">
+        {# {{ form.as_p }} #}
+        <p class="w-32 mr-3">{{ form.title }}</p>
+        <p class="mr-3">
+            {{ form.user }}
+            {{ form.board }}
+        </p>
+        <button><i class="fas fa-search text-gray-500"></i></button>
+    </form>
+    <p class="text-2xl font-extralight pb-6">Search Results (MAX 20)</p>
+    {% if user.is_authenticated %}
+        <div class="flex justify-center flex-wrap pb-10">
+            {% if board == "notice" %}
+                <a href="{% url 'posts:notice' %}"><span class="boards_list"><i
+                        class="fas fa-bullhorn bg-mint"></i>공지</span></a>
+            {% else %}
+                <a href="{% url 'posts:notice' %}"><span class="boards_list"><i class="fas fa-bullhorn bg-gray-400"></i>공지</span></a>
+            {% endif %}
+
+            {% if board == "free" %}
+                <a href="{% url 'posts:free' %}"><span class="boards_list"><i class="fas fa-user-friends bg-mint"></i>자유게시판</span></a>
+            {% else %}
+                <a href="{% url 'posts:free' %}"><span class="boards_list"><i
+                        class="fas fa-user-friends bg-gray-400"></i>자유게시판</span></a>
+            {% endif %}
+
+            {% if board == "anon" %}
+                <a href="{% url 'posts:anon' %}"><span class="boards_list"><i class="fas fa-shoe-prints bg-mint"></i>익명게시판</span></a>
+            {% else %}
+                <a href="{% url 'posts:anon' %}"><span class="boards_list"><i
+                        class="fas fa-shoe-prints bg-gray-400"></i>익명게시판</span></a>
+            {% endif %}
+        </div>
+
+
+
+
+        <table class="w-full text-left shadow-neu rounded bg-white font-extralight">
+            <th class="border-b border-gray-500 h-10 pl-3 text-sm font-medium">제목</th>
+            <th class="border-b border-gray-500 h-10 text-sm font-medium w-20">글쓴이</th>
+            <th class="border-b border-gray-500 h-10 text-sm font-medium w-10 text-center">추천</th>
+            <th class="border-b border-gray-500 h-10 text-sm font-medium w-10 text-center">날짜</th>
+            <th class="border-b border-gray-500 h-10 text-sm font-medium w-10 text-center">조회</th>
+
+            {% for post in posts %}
+                <tr class="border-b border-gray-200 h-10 hover:bg-mint-light">
+
+                    <td class="px-3 text-xs sm:text-base cursor-pointer"
+                        onclick="location.href='{% url "posts:detail" post.pk %}'">
+                        {% if post.user == request.user %}
+                            <i class="fas fa-user text-mint pr-0.5"></i>
+                        {% endif %}
+                        {% if post.like_sum >= 4 %}
+                            <b>{{ post.title }}</b>
+                        {% elif post.like_sum <= -4 %}
+                            <del>{{ post.title }}</del>
+                        {% else %}
+                            {{ post.title }}
+                        {% endif %}
+                        <span class="text-mint-dark font-medium">[{{ post.comments.count }}]</span>
+                    </td>
+                    <td class="text-xs">
+                        {% if post.board == "anon" %}
+                            익명
+                        {% else %}
+                            {{ post.user }}
+                        {% endif %}
+                    </td>
+                    <td class="text-xs border-l text-center">{{ post.like_sum }}</td>
+                    <td class="text-xs border-l text-center">{{ post.created | date:"H:i" }}</td>
+                    <td class="text-xs border-l text-center">{{ post.view_count }}</td>
+
+
+                    {% if today|date:"ymd" == post.created|date:"ymd" %}
+                        NEW!!
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+
+        <div class="flex items-center justify-center my-8">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}" class="text-mint"><i
+                        class="fas fa-arrow-left fa-lg"></i></a>
+            {% endif %}
+            <span class="mx-3 font-medium text-lg">
+                {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="text-mint"><i
+                        class="fas fa-arrow-right fa-lg"></i></a>
+            {% endif %}
+        </div>
+    {% else %}
+        <a href="{% url 'users:login' %}">내용을 보려면 로그인</a>
+    {% endif %}
+
+{% endblock content %}

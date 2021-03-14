@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nav_link {
+}
+
+.header {
+  background: rgba(255, 255, 255, 0.8);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.boards_list {
+  transition: box-shadow 0.3s linear;
+  @apply pr-2 py-0.5 bg-gray-100 rounded-full mr-2 text-base shadow-md hover:shadow-xl border-4 border-white font-extralight;
+  i {
+    @apply text-xl px-1 text-white rounded-full mr-1;
+  }
+}
+
+table {
+  transition: all 0.3s linear;
+}
+
+textarea {
+  @apply rounded-sm border border-gray-400;
+  &:focus {
+    @apply outline-none border-teal-500;
+  }
+}
+
+input {
+  @apply rounded-sm py-5 font-light text-lg w-full text-left border border-gray-600 px-5;
+  &:focus {
+    @apply outline-none border-teal-500;
+  }
+}
+
+.search input {
+  @apply font-light py-0 px-0 rounded mr-1 text-left border border-gray-600 m-0;
+  &:focus {
+    @apply outline-none border-teal-500;
+  }
+}
+
+.main_search input {
+  @apply font-light py-0 px-0 rounded mr-1 text-left border border-gray-400 m-0;
+  &:focus {
+    @apply outline-none border-teal-500;
+  }
+}
+
+input[type="checkbox"] {
+  @apply w-6 h-6 bg-mint;
+}
+
+form {
+  input {
+    @apply mb-3;
+  }
+}
+
+.btn {
+  @apply rounded-sm py-5 font-light text-lg w-full;
+}
+
+body {
+  @apply bg-gray-100;
+}
+
+.profile_icon {
+  @apply my-2;
+  i {
+    @apply text-lg p-0 mr-2;
+  }
+}
+
+
+.sidebar_list li {
+  padding-left: 30px;
+}
+
+input[id="menuicon"] {
+  display: none;
+}
+
+input[id="menuicon"] + label {
+  display: block;
+  width: 1.5rem;
+  height: 1rem;
+  position: fixed;
+  cursor: pointer;
+  right: 0;
+  transition: all .35s;
+  z-index: 200000;
+  margin-right: 1rem;
+  margin-top: -0.5rem;
+}
+
+input[id="menuicon"] + label span {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  border-radius: 30px;
+  background: #000;
+  transition: all .35s;
+}
+
+input[id="menuicon"] + label span:nth-child(1) {
+  top: 0;
+}
+
+input[id="menuicon"] + label span:nth-child(2) {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+input[id="menuicon"] + label span:nth-child(3) {
+  bottom: 0;
+}
+
+input[id="menuicon"]:checked + label span:nth-child(1) {
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+input[id="menuicon"]:checked + label span:nth-child(2) {
+  opacity: 0;
+}
+
+input[id="menuicon"]:checked + label span:nth-child(3) {
+  bottom: 50%;
+  transform: translateY(50%) rotate(-45deg);
+}
+
+div[class="sidebar"] {
+  width: 300px;
+  height: 100%;
+  background: white;
+  position: fixed;
+  top: 0;
+  right: -300px;
+  z-index: 100000; /* -> 1 */
+  transition: all .35s;
+}
+
+input[id="menuicon"]:checked + label + div {
+  right: 0;
+}
+
+
+.sidebar_list {
+  list-style: none;
+  padding-top: 5rem;
+  line-height: 2rem;
+  font-size: 1rem;
+  height: 100vh;
+  background-color: white;
+}
+
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  transition: all .35s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 40000;
+}
+
+input#menuicon:checked ~ .background {
+  opacity: 1;
+  visibility: visible;
+}

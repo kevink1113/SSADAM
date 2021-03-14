@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="w-full">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <title>{% block page_title %}{% endblock %} | SSADAM</title>
+    <meta name="theme-color" content="#17a8c9"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta property="og:image" content="{% static 'img/og_image.png' %}"/>
+    <meta property="og:description" content="Practicing involuntary social distancing."/>
+
+    <link rel="icon" href="{% static 'img/icon.png' %}"/>
+    <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}"/>
+</head>
+<body class="container mt-28 md:w-9/12 sm:w-11/12 xs mx-auto">
+<header class="container inset-0 flex fixed w-screen z-50 max-w-full flex items-center justify-between px-6 h-14 border-b border-gray-400 header">
+    <a href="{% url "core:home" %}" class="mr-6">
+        <img class="w-24 bg-cover bg-center" src="{% static 'img/ASSA_logotype.png' %}"/>
+    </a>
+
+    <div class="ox sm:hidden">
+        <input type="checkbox" id="menuicon">
+        <label for="menuicon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </label>
+        <div class="sidebar">
+            <ul class="sidebar_list">
+                {% if user.is_authenticated %}
+                    <li class="pb-6">
+                        <a href="{% url "users:detail" user.pk %}" class="flex items-center">
+                            {% if request.user.avatar != '' %}
+                                <img style="width: 4rem; height: 4rem;" src="{{ request.user.avatar.url }}"
+                                     class="object-cover object-center rounded-full"/>
+                            {% else %}
+                                <img style="width: 4rem; height: 4rem;" src="{% static 'img/blank_profile.png' %}"
+                                     class="object-cover object-center rounded-full"/>
+                            {% endif %}
+                            <div>
+                                <p class="pl-4 text-xs font-medium text-mint-dark">내 프로필</p>
+                                <p class="pl-4 text-lg">{{ request.user.username }}<i
+                                        class="fas fa-chevron-right pl-2 text-gray-400"></i></p>
+                            </div>
+
+                        </a>
+                    </li>
+                    <li class="text-lg my-4"><a href="{% url 'posts:new_post' %}"><i
+                            class="fas fa-plus text-mint-dark text-xl pr-2"></i>New Post</a></li>
+                    <li class="text-lg my-4"><a href="{% url 'posts:list' %}">Posts</a></li>
+
+                    <li class="text-lg my-4"><a href="{% url 'posts:notice' %}">Notifications</a></li>
+                    <li class="text-lg my-4"><a href="{% url 'posts:trending' %}">Trending Posts</a></li>
+                    <li class="text-lg my-4"><a href="{% url 'users:rank' %}">User Rank</a></li>
+
+                    <li class="text-lg my-4"><a href="{% url "users:logout" %}">Log out</a></li>
+                    <div class="main_search pl-7 mt-32">
+                        <form method="get" action="{% url 'posts:search' %}">
+                            <input value="{{ title }}" name="title" placeholder="제목 검색" class="w-40 rounded mr-1"/>
+                            <button><i class="fas fa-search text-gray-500"></i></button>
+                        </form>
+                    </div>
+                    <div class="pl-7 pt-10">
+                        <a href="https://github.com/A-S-S-A" target="_blank"><i
+                                class="fab fa-github text-2xl pr-3 pl-0.5 text-gray-400"></i></a>
+                        <a href="https://assa.dev/" target="_blank"><i
+                                class="fas fa-home text-2xl pr-2.5 text-gray-400"></i></a>
+                        <a href="https://www.acmicpc.net/group/9605" target="_blank"><i
+                                class="fab fa-bootstrap text-2xl text-gray-400 pr-3 pl-0.5"></i></a>
+                        <a href="https://ssh.assa.dev/" target="_blank"><i
+                                class="fas fa-network-wired pr-3 text-gray-400"></i></a>
+                    </div>
+
+                {% else %}
+                    <li class="text-lg my-4"><a href="{% url "users:login" %}">Login</a></li>
+                    <li class="text-lg my-4"><a href="{% url "users:signup" %}">Sign up</a></li>
+                {% endif %}
+
+
+            </ul>
+            <label for="menuicon"></label>
+        </div>
+        <label for="menuicon" class="background"></label>
+    </div>
+
+    {% include "partials/nav.html" %}
+
+</header>
+
+{% block content %}{% endblock %}
+
+
+{% include "partials/footer.html" %}
+
+</body>
+</html>

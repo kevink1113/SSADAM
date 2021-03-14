@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Update Profile
+{% endblock page_title %}
+
+{% block search-bar %}
+{% endblock search-bar %}
+
+{% block content %}
+    <div class="container lg:w-3/5 mx-auto my-10 flex flex-col items-center border p-6 border-gray-400 bg-white">
+        <form method="POST" action="{% url "users:update" %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {# {{ form.as_p }} #}
+            <div class="p-2 mb-4 font-light rounded-lg shadow-lg">
+                <p class="pr-4 text-lg font-light">프로필 사진</p>
+                {{ form.avatar }}
+                {{ form.bio }}
+            </div>
+
+
+            <div class="p-2 mb-4 rounded-lg shadow-lg">
+                <div class="flex">
+                    <span class="pr-4 text-lg font-light">군인이거나 입대할 예정?</span> {{ form.is_soldier }}
+                </div>
+                {{ form.mil_start }}
+                {{ form.mil_fin }}
+                {{ form.mil_address }}
+            </div>
+            <div class="p-2 mb-4 rounded-lg shadow-lg">
+                <p class="pr-4 text-2xl font-light mb-2">개인 정보</p>
+                <div class="flex"><span class="pr-4">실제 본인 계정인가? (아닌 경우에는 홈 목록에 표시되지 않습니다.)</span>{{ form.is_real }}</div>
+                {{ form.last_name }}
+                {{ form.first_name }}
+                {{ form.username }}
+                {{ form.phone }}
+                {{ form.birthdate }}
+                {{ form.student_id }}
+                {{ form.homepage }}
+                {{ form.boj_id }}
+                {{ form.github_id }}
+                {{ form.blog }}
+                {{ form.address }}
+            </div>
+            <button class="btn bg-mint text-white">Update Profile</button>
+        </form>
+        <a href="{% url 'users:password' %}" class="text-teal-500 font-medium mt-6">Change Password</a>
+    </div>
+
+{% endblock content %}

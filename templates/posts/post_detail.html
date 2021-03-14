@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+
+        <div class="flex justify-center flex-wrap pb-8">
+            {% if post.board == "notice" %}
+                <a href="{% url 'posts:notice' %}"><span class="boards_list"><i
+                        class="fas fa-bullhorn bg-mint"></i>공지</span></a>
+            {% else %}
+                <a href="{% url 'posts:notice' %}"><span class="boards_list"><i class="fas fa-bullhorn bg-gray-400"></i>공지</span></a>
+            {% endif %}
+
+            {% if post.board == "free" %}
+                <a href="{% url 'posts:free' %}"><span class="boards_list"><i class="fas fa-user-friends bg-mint"></i>자유게시판</span></a>
+            {% else %}
+                <a href="{% url 'posts:free' %}"><span class="boards_list"><i
+                        class="fas fa-user-friends bg-gray-400"></i>자유게시판</span></a>
+            {% endif %}
+
+            {% if post.board == "anon" %}
+                <a href="{% url 'posts:anon' %}"><span class="boards_list"><i class="fas fa-shoe-prints bg-mint"></i>익명게시판</span></a>
+            {% else %}
+                <a href="{% url 'posts:anon' %}"><span class="boards_list"><i
+                        class="fas fa-shoe-prints bg-gray-400"></i>익명게시판</span></a>
+            {% endif %}
+        </div>
+        <div class="flex">
+            <div class="p-3 mr-3 hidden xl:block w-80 font-extralight">
+
+                <div class="m-4 p-4 rounded shadow bg-white">
+
+                    <p class="font-medium text-lg pb-2"><a href="{% url 'posts:notice' %}">Notifications</a></p>
+                    {% for post in notifications %}
+                        <div class="flex items-center pb-1">
+
+                            {# Post 이름, 좋아요/댓글 개수 #}
+                            <p class="flex items-center justify-between w-full">
+                                <a href="{% url "posts:detail" post.pk %}" class="text-sm">
+                                    <span class="block truncate">{{ post.title | truncatechars:10 }}</span>
+                                </a>
+                            </p>
+                            <span class="text-mint font-medium text-sm flex items-center w-16 justify-between">
+                                        <i class="fas fa-arrows-alt-v"></i>
+                                        {{ post.like_sum }}
+                                        <i class="fas fa-comment"></i>
+                                        {{ post.comments.count }}
+                            </span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="m-4 p-4 rounded shadow bg-white">
+
+                    <p class="font-medium text-lg pb-2"><a href="{% url 'posts:list' %}">Recent Posts</a></p>
+                    {% for post in recent_posts %}
+                        <div class="flex items-center pb-1">
+
+                            {# Post 이름, 좋아요/댓글 개수 #}
+                            <p class="flex items-center justify-between w-full">
+                                <a href="{% url "posts:detail" post.pk %}" class="text-sm">
+                                    <span class="block truncate">{{ post.title | truncatechars:10 }}</span>
+                                </a>
+                            </p>
+                            <span class="text-mint font-medium text-sm flex items-center w-16 justify-between">
+                                        <i class="fas fa-arrows-alt-v"></i>
+                                        {{ post.like_sum }}
+                                        <i class="fas fa-comment"></i>
+                                        {{ post.comments.count }}
+                                </span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="m-4 p-4 rounded shadow bg-white">
+
+                    <p class="font-medium text-lg pb-2"><a href="{% url 'posts:trending' %}">Trending Posts</a></p>
+                    {% for post in trending_posts %}
+                        <div class="flex items-center pb-1">
+
+                            {# Post 이름, 좋아요/댓글 개수 #}
+                            <p class="flex items-center justify-between w-full">
+                                <a href="{% url "posts:detail" post.pk %}" class="text-sm">
+                                    <span class="block truncate">{{ post.title | truncatechars:10 }}</span>
+                                </a>
+                            </p>
+                            <span class="text-mint font-medium text-sm flex items-center w-16 justify-between">
+                                        <i class="fas fa-arrows-alt-v"></i>
+                                        {{ post.like_sum }}
+                                        <i class="fas fa-comment"></i>
+                                        {{ post.comments.count }}
+                                </span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <div class="w-full">
+                <div class="rounded shadow-neu p-3 bg-white">
+                    <span class="hidden">{{ post.view_click }}</span>
+
+                    <p class="font-bold text-xl">{{ post.title }}</p>
+                    <div class="flex justify-between pb-6">
+                        <span class="text-gray-500 font-light text-sm">
+                            {% if post.board == "anon" %}
+                                by 익명 |
+                            {% else %}
+                                by {{ post.user }} |
+                            {% endif %}
+                            {% if post.board == "notice" %}
+                                <a href="{% url 'posts:notice' %}">공지</a>
+                            {% elif post.board == "free" %}
+                                <a href="{% url 'posts:free' %}">자유게시판</a>
+                            {% else %}
+                                <a href="{% url 'posts:anon' %}">익명게시판</a>
+                            {% endif %}
+                            | 조회 {{ post.view_count }}
+                        </span>
+                        <span class="text-gray-500 font-light text-sm">
+                            {{ post.created | date:"Y/m/d H:i" }}
+                        </span>
+                    </div>
+                    <div class="flex justify-end text-mint-dark text-xl">
+                        {% if request.user == post.user %}
+                            <a href="{% url 'posts:delete' post.pk %}" onclick="return confirm('정말로 이 글을 삭제할 것임?')"><i
+                                    class="fas fa-trash-alt mr-4"></i></a>
+                        {% endif %}
+
+                        {% if request.user == post.user %}
+                            <a href="{% url 'posts:modify' post.pk %}"><i class="fas fa-edit"></i></a>
+                        {% endif %}
+                    </div>
+                    <div>{{ post.content | safe }}</div>
+                </div>
+                <div>
+                    <div class="flex items-center justify-center m-8">
+                        <div class="mr-5">
+                            {% if user in post.like_users.all %}
+                                <a href="{% url 'posts:LikePost' post.id %}">
+                                    <i class="far fa-thumbs-up rounded-full bg-mint p-3 flex-grow-0 text-2xl text-white"></i>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'posts:LikePost' post.id %}">
+                                    <i class="far fa-thumbs-up rounded-full bg-gray-500 p-3 flex-grow-0 text-2xl text-white"></i>
+                                </a>
+                            {% endif %}
+                            <span class="bg-gray-400 px-1 rounded-full text-white">{{ post.like_users.count }}</span>
+                        </div>
+                        <div>
+                            {% if user in post.dislike_users.all %}
+                                <a href="{% url 'posts:disLikePost' post.id %}">
+                                    <i class="far fa-thumbs-down rounded-full bg-mint p-3 flex-grow-0 text-2xl text-white"></i>
+                                </a>
+                            {% else %}
+                                <a href="{% url 'posts:disLikePost' post.id %}">
+                                    <i class="far fa-thumbs-down rounded-full bg-gray-500 p-3 flex-grow-0 text-2xl text-white"></i>
+                                </a>
+                            {% endif %}
+                            <span class="bg-gray-400 px-1 rounded-full text-white">{{ post.dislike_users.count }}</span>
+                        </div>
+                    </div>
+
+                    <p class="text-mint-dark text-lg font-bold pl-3">댓글 {{ post.comments.count }}개</p>
+                    <div class="p-3 rounded shadow-neu bg-white">
+                        {% for comment in post.comments.all %}
+                            <a name="comment_{{ comment.id }}"></a>
+                            <div class="py-3 border-t border-gray-200">
+                                <div class="flex items-end">
+                                    <div class="mr-2">
+                                        {% if comment.user == post.user %}
+                                            <span class="font-bold text-mint-dark">글쓴이</span>
+                                        {% else %}
+                                            {% if post.board == "anon" %}
+                                                익 {{ post.user_id }}{% widthratio post.id 1 comment.user.id %}
+                                            {% else %}
+                                                {{ comment.user }}
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    <div class="font-extralight text-xs text-gray-500">{{ comment.created|date:"m/d h:i" }}</div>
+                                    <div class="ml-6">
+                                        {% if comment.user == request.user %}
+                                            <a href="{% url 'comments:delete_comment' comment.pk %}">
+                                                <i class="fas fa-trash-alt text-mint-dark"
+                                                   onclick="return confirm('정말로 이 댓글을 삭제할 것임?')"></i></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="font-extralight pt-1.5">
+                                    {{ comment.content | safe }}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <form action="{% url 'comments:new_comment' post.pk %}" method="post" class="flex border-t border-gray-200 pt-3">
+                            {% csrf_token %}
+                            <textarea name="content" id="content" class="h-16 w-full"></textarea>
+                            <button class="bg-red-500 w-20 h-16 ml-3 rounded text-white bg-mint">댓글 작성</button>
+                        </form>
+                    </div>
+                    <button class="h-10 w-20 my-3 border rounded bg-white">
+                        {% if post.board == "notice" %}
+                            <a href="{% url 'posts:notice' %}">목록으로</a>
+                        {% elif post.board == "free" %}
+                            <a href="{% url 'posts:free' %}">목록으로</a>
+                        {% else %}
+                            <a href="{% url 'posts:anon' %}">목록으로</a>
+                        {% endif %}
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

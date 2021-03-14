@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="flex justify-center flex-wrap">
+            <a href="{% url 'posts:notice' %}"><span class="boards_list"><i
+                    class="fas fa-bullhorn bg-mint"></i>공지</span></a>
+            <a href="{% url 'posts:free' %}"><span class="boards_list"><i class="fas fa-user-friends bg-mint"></i>자유게시판</span></a>
+            <a href="{% url 'posts:anon' %}"><span class="boards_list"><i
+                    class="fas fa-shoe-prints bg-mint"></i>익명게시판</span></a>
+        </div>
+    {% endif %}
+
+    <div class="flex flex-wrap flex-wrap-reverse justify-center">
+        <div class="xl:w-8/12 max-w-3xl md:w-full">
+            {% for user in users %}
+
+                <div class="flex flex-wrap justify-around m-4 p-4 rounded shadow items-center bg-white">
+                    <a href="{% url "users:detail" user.pk %}">
+                        {% if user.avatar != '' %}
+                            {# <div class="w-9 h-12 bg-cover bg-center" style="background-image: url(media/{{ user.avatar }})"></div> #}
+                            <img style="width: 120px; height: 120px;" src="{{ user.avatar.url }}"
+                                 class="object-cover object-center rounded-full shadow shadow-xl"/>
+                        {% else %}
+                            <img style="width: 120px; height: 120px;" src="{% static 'img/blank_profile.png' %}"
+                                 class="object-cover object-center rounded-full shadow shadow-xl"/>
+                        {% endif %}
+                    </a>
+
+                    <div class="flex flex-col w-full px-4 max-w-lg">
+                        <a href="{% url "users:detail" user.pk %}" class="flex flex-col font-medium pb-2">
+                            <span>{{ user.last_name }}{{ user.first_name }}</span>
+                            <span>{{ user.username }}<i class="fas fa-chevron-right pl-2 text-mint"></i></span>
+                        </a>
+
+                        <p class="italic">{{ user.bio }}</p>
+                        {% if user.is_soldier == True and user.mil_start != None and user.mil_fin != None %}
+                            <p class="text-sm font-light mt-2">
+                                <i class="fas fa-campground mr-1 text-mint-dark"></i>군 복무 중 {{ user.mil_start|date:'Y.m.d' }} ~ {{ user.mil_fin|date:'Y.m.d' }}<br>
+                                전역까지 {{ user.mil_fin|timeuntil }} (D-{{ user.mil_left_date }})
+                            </p>
+
+                            <p class="text-xs font-light">{{ user.mil_percentage }}% 수료</p>
+                            <svg viewBox="0 0 100 2" xmlns="http://www.w3.org/2000/svg">
+                                <!-- No dashes nor gaps -->
+                                <line x1="0" y1="1" x2="100" y2="1" stroke="lightgray"/>
+                                <line x1="0" y1="1" x2="{{ user.mil_percentage }}" y2="1" stroke="rgb(23, 168, 201)"/>
+                            </svg>
+
+                        {% endif %}
+
+                        {% if user.homepage != None %}
+                            <a class="my-0.5" href={{ user.homepage }} target="_blank">HomePage<i class="fas fa-chevron-right pl-2 text-gray-400"></i></a>
+                        {% endif %}
+                        {% if user.blog != None %}
+                            <a class="my-0.5" href={{ user.blog }} target="_blank">Blog<i class="fas fa-chevron-right pl-2 text-gray-400"></i></a>
+                        {% endif %}
+
+                        {% if user.birthdate|date:"md" == today|date:"md" %}
+                            <b><i class="fas fa-birthday-cake text-mint mr-2"></i>오늘 생일!!</b>
+                        {% endif %}
+
+                    </div>
+
+                    {% comment %}
+                        // {% now "md" %}
+                        {% if date_created|date:"YmdHis" < now|date:"YmdHis" %}
+                        {% endif %}
+                    {% endcomment %}
+                </div>
+
+            {% endfor %}
+        </div>
+
+
+        <div class="max-w-3xl w-full xl:w-80 sm:w-full font-extralight">
+            {% if user.is_authenticated %}
+                <div class="m-4 p-4 rounded shadow bg-white">
+
+                    <p class="font-medium text-lg pb-2"><a href="{% url 'posts:notice' %}">Notifications</a></p>
+                    {% for post in notifications %}
+                        <div class="flex items-center pb-1">
+
+                            {# Post 이름, 좋아요/댓글 개수 #}
+                            <p class="flex items-center justify-between w-full">
+                                <a href="{% url "posts:detail" post.pk %}" class="text-sm">
+                                    <span class="block truncate">{{ post.title | truncatechars:16 }}
+                                        {% if today|date:"ymd" == post.created|date:"ymd" %}
+                                            <span class="text-xs text-red-400">NEW</span>
+                                        {% endif %}
+
+                                    </span>
+                                </a>
+                            </p>
+
+                            <span class="text-mint font-medium text-sm flex items-center w-16 justify-between">
+                                        <i class="fas fa-arrows-alt-v"></i>
+                                        {{ post.like_sum }}
+                                        <i class="fas fa-comment"></i>
+                                        {{ post.comments.count }}
+                            </span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="m-4 p-4 rounded shadow bg-white">
+
+                    <p class="font-medium text-lg pb-2"><a href="{% url 'posts:list' %}">Recent Posts</a></p>
+                    {% for post in recent_posts %}
+                        <div class="flex items-center pb-1">
+
+                            {# Post 이름, 좋아요/댓글 개수 #}
+                            <p class="flex items-center justify-between w-full">
+                                <a href="{% url "posts:detail" post.pk %}" class="text-sm">
+                                    <span class="block truncate">{{ post.title | truncatechars:16 }}
+                                        {% if today|date:"ymd" == post.created|date:"ymd" %}
+                                            <span class="text-xs text-red-400">NEW</span>
+                                        {% endif %}
+
+                                    </span>
+                                </a>
+                            </p>
+
+                            <span class="text-mint font-medium text-sm flex items-center w-16 justify-between">
+                                        <i class="fas fa-arrows-alt-v"></i>
+                                        {{ post.like_sum }}
+                                        <i class="fas fa-comment"></i>
+                                        {{ post.comments.count }}
+                                </span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="m-4 p-4 rounded shadow bg-white">
+
+                    <p class="font-medium text-lg pb-2"><a href="{% url 'posts:trending' %}">Trending Posts</a></p>
+                    {% for post in trending_posts %}
+                        <div class="flex items-center pb-1">
+
+                            {# Post 이름, 좋아요/댓글 개수 #}
+                            <p class="flex items-center justify-between w-full">
+                                <a href="{% url "posts:detail" post.pk %}" class="text-sm">
+                                    <span class="block truncate">{{ post.title | truncatechars:16 }}
+                                        {% if today|date:"ymd" == post.created|date:"ymd" %}
+                                            <span class="text-xs text-red-400">NEW</span>
+                                        {% endif %}
+
+                                    </span>
+                                </a>
+                            </p>
+                            <span class="text-mint font-medium text-sm flex items-center w-16 justify-between">
+                                        <i class="fas fa-arrows-alt-v"></i>
+                                        {{ post.like_sum }}
+                                        <i class="fas fa-comment"></i>
+                                        {{ post.comments.count }}
+                                </span>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <div class="m-4 p-4 rounded shadow bg-white">
+
+                    <p class="font-medium text-lg pb-2">Links</p>
+                    <a href="https://github.com/A-S-S-A" target="_blank"><p class="flex items-center"><i class="fab fa-github text-xl pr-3 pl-0.5"></i>GitHub</p></a>
+                    <a href="https://assa.dev/" target="_blank"><p class="flex items-center"><i class="fas fa-home text-xl pr-2.5 text-indigo-400"></i>HomePage</p></a>
+                    <a href="https://www.acmicpc.net/group/9605" target="_blank"><p class="flex items-center"><i class="fab fa-bootstrap text-xl text-blue-500 pr-3 pl-0.5"></i>BOJ</p></a>
+                    <a href="https://ssh.assa.dev/" target="_blank"><p class="flex items-center"><i class="fas fa-network-wired pr-3 text-mint"></i>Web Terminal</p></a>
+
+                    <div class="main_search mt-4">
+                        <form method="get" action="{% url 'posts:search' %}">
+                            <input value="{{ title }}" name="title" placeholder="제목 검색" class="w-56 rounded mr-1"/>
+                            <button><i class="fas fa-search text-gray-500"></i></button>
+                        </form>
+                    </div>
+
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock content %}
+

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block page_title %}
+    New Post
+{% endblock page_title %}
+
+{% block content %}
+    <form method="POST" action="">
+        <div class="p-2 border-gray-400 bg-white rounded shadow">
+            {% csrf_token %}
+            {# {{ form|safe }} #}
+            <p>{{ form.title }}</p>
+            <p class="font-extralight mt-2 mb-6">게시판: {{ form.board }}</p>
+            {{ form.content|safe }}
+            <button class="btn bg-mint text-white mt-4">글쓰기</button>
+        </div>
+
+    </form>
+{% endblock content %}

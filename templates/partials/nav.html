@@ -1,0 +1,27 @@
+{% load static %}
+{# <a href="{% url "core:home" %}">A.S.S.A</a> #}
+
+<ul class="flex items-center text-sm font-medium hidden sm:flex">
+    {% if user.is_authenticated %}
+        <li class="mr-3 sm:mr-6 sm:text-sm"><a href="{% url "users:logout" %}">Log out</a></li>
+        <li class="mr-3 sm:mr-6"><a href="{% url 'posts:list' %}">Posts</a></li>
+
+        <li class="mr-3 sm:mr-6"><a href="{% url 'posts:notice' %}">Notice</a></li>
+        <li class="mr-3 sm:mr-6"><a href="{% url 'posts:trending' %}">Trending</a></li>
+        <li class="mr-3 sm:mr-6"><a href="{% url 'users:rank' %}">Ranking</a></li>
+
+        <li class="mr-3 sm:mr-6 sm:text-sm"><a href="{% url 'posts:new_post' %}"><i class="fas fa-plus text-mint-dark text-lg"></i></a></li>
+        <li class="">
+            <a href="{% url "users:detail" user.pk %}">
+                {%  if request.user.avatar != '' %}
+                    <img style="width: 2.5rem; height: 2.5rem;"  src="{{ request.user.avatar.url }}" class="object-cover object-center rounded-full"/>
+                {%  else %}
+                    <img style="width: 3rem; height: 3rem;" src="{% static 'img/blank_profile.png' %}" class="object-cover object-center rounded-full"/>
+                {%  endif %}
+            </a>
+        </li>
+    {% else %}
+        <li class="mr-3 sm:mr-6 sm:text-sm"><a href="{% url "users:login" %}">Login</a></li>
+        <li class=""><a href="{% url "users:signup" %}">Sign up</a></li>
+    {% endif %}
+</ul>

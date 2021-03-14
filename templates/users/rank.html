@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+    Rank
+{% endblock page_title %}
+
+{% block content %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        var config1 = {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: {{ data_posts|safe }},
+                    backgroundColor: [
+                        '#17a8c9', '#14B8A6', '#A78BFA', '#F0ABFC', '#FBBF24', '#BBF7D0', '#BAE6FD', '#F5D0FE', '#FFE4E6'
+                    ],
+                    label: "Likes"
+                }],
+                labels: {{ label_posts|safe }}
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: "쓴 글 수",
+                    fontSize: 18,
+                    position: 'top',
+                }
+            }
+        };
+        var config2 = {
+            type: 'horizontalBar',
+            data: {
+                datasets: [{
+                    backgroundColor: "#C7D2FE",
+                    data: {{ data_like|safe }},
+                    label: '받은 추천',
+                    order: 2
+                }, {
+                    backgroundColor: "#17a8c9",
+                    label: "총합",
+                    labels: {{ label_like |safe}},
+                    data: {{ data_sumlike|safe }},
+                    type: 'horizontalBar',
+                    order: 1
+                }, {
+                    backgroundColor: "#FBCFE8",
+                    label: "받은 비추천",
+                    labels: {{ label_like |safe}},
+                    data: {{ data_dislike|safe }},
+                    type: 'horizontalBar',
+                    order: 3
+                }
+                ],
+                labels: {{ label_like|safe }}
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display: true,
+                    text: "추천 수",
+                    fontSize: 18,
+                    position: 'top',
+                },
+            },
+            order: 1,
+        };
+
+        window.onload = function () {
+            var ctx1 = document.getElementById('pie-chart').getContext('2d');
+            window.myPie = new Chart(ctx1, config1);
+
+            var ctx2 = document.getElementById('aa').getContext('2d');
+            window.myPie = new Chart(ctx2, config2);
+        };
+
+    </script>
+
+
+
+    {% if user.is_authenticated %}
+        <div class="flex justify-center flex-wrap pb-10">
+            {% if board == "notice" %}
+                <a href="{% url 'posts:notice' %}"><span class="boards_list"><i
+                        class="fas fa-bullhorn bg-mint"></i>공지</span></a>
+            {% else %}
+                <a href="{% url 'posts:notice' %}"><span class="boards_list"><i class="fas fa-bullhorn bg-gray-400"></i>공지</span></a>
+            {% endif %}
+
+            {% if board == "free" %}
+                <a href="{% url 'posts:free' %}"><span class="boards_list"><i class="fas fa-user-friends bg-mint"></i>자유게시판</span></a>
+            {% else %}
+                <a href="{% url 'posts:free' %}"><span class="boards_list"><i
+                        class="fas fa-user-friends bg-gray-400"></i>자유게시판</span></a>
+            {% endif %}
+
+            {% if board == "anon" %}
+                <a href="{% url 'posts:anon' %}"><span class="boards_list"><i class="fas fa-shoe-prints bg-mint"></i>익명게시판</span></a>
+            {% else %}
+                <a href="{% url 'posts:anon' %}"><span class="boards_list"><i
+                        class="fas fa-shoe-prints bg-gray-400"></i>익명게시판</span></a>
+            {% endif %}
+        </div>
+
+        <div class="mx-2 sm:mx-0">
+            <p class="font-medium text-3xl text-mint-dark pb-4">Ranking</p>
+            <ol class="list-decimal">
+                {% for user in label_like %}
+                    <p><span class="text-mint">{{ forloop.counter }}</span> - {{ user }}</p>
+                {% endfor %}
+            </ol>
+
+            <div class="flex flex-wrap justify-around">
+                <div id="container" class="w-full max-w-xl mb-10">
+                    <canvas id="pie-chart"></canvas>
+                </div>
+                <div id="container" class="w-full max-w-xl mb-10">
+                    <canvas id="aa"></canvas>
+                </div>
+            </div>
+        </div>
+
+    {% else %}
+        <a href="{% url 'users:login' %}">내용을 보려면 로그인</a>
+    {% endif %}
+
+{% endblock content %}
