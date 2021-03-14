@@ -41,7 +41,7 @@ class SignUpForm(forms.ModelForm):
             "last_name": forms.TextInput(attrs={"placeholder": "성"}),
             "first_name": forms.TextInput(attrs={"placeholder": "이름"}),
             "username": forms.TextInput(attrs={"placeholder": "닉네임"}),
-            "bio": forms.TextInput(attrs={"placeholder": "하고 싶은 말 (A.S.S.A 인증용)"}),
+            "bio": forms.TextInput(attrs={"placeholder": "하고 싶은 말"}),
         }
 
     password = forms.CharField(
@@ -54,10 +54,12 @@ class SignUpForm(forms.ModelForm):
     # password1 = forms.CharField(widget=forms.PasswordInput, label="비밀번호 확인")
 
     def clean_password1(self):
+        """
         bio = self.cleaned_data.get("bio")
         validate = str(bio)
-        if validate.__contains__("동강대 지융미 화이팅") is False:
+        if validate.__contains__("SGCS") is False:
             raise forms.ValidationError("You are not an authorized member of A.S.S.A!")
+        """
         password = self.cleaned_data.get("password")
         password1 = self.cleaned_data.get("password1")
         if password != password1:

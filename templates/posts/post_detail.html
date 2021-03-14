@@ -126,7 +126,7 @@
                     </div>
                     <div class="flex justify-end text-mint-dark text-xl">
                         {% if request.user == post.user %}
-                            <a href="{% url 'posts:delete' post.pk %}" onclick="return confirm('정말로 이 글을 삭제할 것임?')"><i
+                            <a href="{% url 'posts:delete' post.pk %}" onclick="return confirm('정말로 이 글을 삭제할 것인가요?')"><i
                                     class="fas fa-trash-alt mr-4"></i></a>
                         {% endif %}
 
@@ -186,7 +186,7 @@
                                         {% if comment.user == request.user %}
                                             <a href="{% url 'comments:delete_comment' comment.pk %}">
                                                 <i class="fas fa-trash-alt text-mint-dark"
-                                                   onclick="return confirm('정말로 이 댓글을 삭제할 것임?')"></i></a>
+                                                   onclick="return confirm('정말로 이 댓글을 삭제할 것인가요?')"></i></a>
                                         {% endif %}
                                     </div>
                                 </div>
