@@ -165,9 +165,17 @@ class UpdateProfileView(SuccessMessageMixin, UpdateView):
         form.fields["student_id"].widget.attrs = {"placeholder": "학번"}
         form.fields["phone"].widget.attrs = {"placeholder": "전화번호 ex) 010-0000-0000"}
         form.fields["address"].widget.attrs = {"placeholder": "집 주소"}
-
         return form
-
+    """
+    def form_valid(self, form):
+        try:
+            # username = form.cleaned_data.get("username")
+            img = form.cleaned_data.get("avatar")
+            img.thumbnail((20, 20))
+        except Exception:
+            print("could not create thumbnail for ", form.cleaned_data.get("avatar"))
+        return super().form_valid(form)
+    """
 
 class UpdatePasswordView(SuccessMessageMixin, PasswordChangeView):
     template_name = "users/update-password.html"
