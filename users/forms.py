@@ -36,11 +36,12 @@ class LoginForm(forms.Form):
 class SignUpForm(forms.ModelForm):
     class Meta:
         model = models.User
-        fields = ("last_name", "first_name", "username", "bio")
+        fields = ("last_name", "first_name", "username", "bio", "student_id")
         widgets = {
             "last_name": forms.TextInput(attrs={"placeholder": "성"}),
             "first_name": forms.TextInput(attrs={"placeholder": "이름"}),
             "username": forms.TextInput(attrs={"placeholder": "닉네임"}),
+            "student_id": forms.NumberInput(attrs={"placeholder": "학번"}),
             "bio": forms.TextInput(attrs={"placeholder": "하고 싶은 말"}),
         }
 

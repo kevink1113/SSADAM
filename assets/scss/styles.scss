@@ -177,3 +177,36 @@ input#menuicon:checked ~ .background {
   opacity: 1;
   visibility: visible;
 }
+
+.text-line text {
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation: dash 5s linear forwards, filling 4s ease-in forwards;
+}
+
+.text-fill text {
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation: filling 5s ease-in forwards;
+}
+
+@keyframes dash {
+    from {
+        stroke-opacity: 0.3;
+    }
+    to {
+        stroke-dashoffset: 0;
+        stroke-opacity: 1;
+    }
+}
+
+@keyframes filling {
+    from {
+        fill: black;
+        fill-opacity: 0;
+    }
+    to {
+        fill: black;
+        fill-opacity: 1;
+    }
+}

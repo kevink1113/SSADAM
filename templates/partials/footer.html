@@ -1,8 +1,13 @@
+{% load static %}
 <footer class="container mx-auto text-center py-10 border-t font-medium text-gray-500">
 
     <div class="flex flex-col">
-        <span>
-            <a href="https://kevink1113.com" target="_blank" >&copy; 2021 kevink1113. All rights reserved.</a>
+        <span class="pb-1">
+            &copy; 2021 <a href="https://kevink1113.com" target="_blank" class="hover:underline">kevink1113</a>. All rights reserved.
         </span>
+        <a href="{% url "core:about" %}" class="hover:underline text-xs text-gray-400 pb-0.5"><i class="far fa-question-circle pr-1.5"></i>About</a>
+        <a href="{% static 'terms.html' %}" class="hover:underline text-xs text-gray-400"
+           onclick="window.open(this.href, '_blank', 'width=400px,height=400px,toolbars=no'); return false;">사용자 약관,
+            개인정보 취급방침</a>
     </div>
 </footer>

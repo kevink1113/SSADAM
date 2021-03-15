@@ -41,7 +41,8 @@
                         <p class="italic">{{ user.bio }}</p>
                         {% if user.is_soldier == True and user.mil_start != None and user.mil_fin != None %}
                             <p class="text-sm font-light mt-2">
-                                <i class="fas fa-campground mr-1 text-mint-dark"></i>군 복무 중 {{ user.mil_start|date:'Y.m.d' }} ~ {{ user.mil_fin|date:'Y.m.d' }}<br>
+                                <i class="fas fa-campground mr-1 text-mint-dark"></i>군 복무
+                                중 {{ user.mil_start|date:'Y.m.d' }} ~ {{ user.mil_fin|date:'Y.m.d' }}<br>
                                 전역까지 {{ user.mil_fin|timeuntil }} (D-{{ user.mil_left_date }})
                             </p>
 
@@ -55,10 +56,12 @@
                         {% endif %}
 
                         {% if user.homepage != None %}
-                            <a class="my-0.5" href={{ user.homepage }} target="_blank">HomePage<i class="fas fa-chevron-right pl-2 text-gray-400"></i></a>
+                            <a class="my-0.5" href={{ user.homepage }} target="_blank">HomePage<i
+                                    class="fas fa-chevron-right pl-2 text-gray-400"></i></a>
                         {% endif %}
                         {% if user.blog != None %}
-                            <a class="my-0.5" href={{ user.blog }} target="_blank">Blog<i class="fas fa-chevron-right pl-2 text-gray-400"></i></a>
+                            <a class="my-0.5" href={{ user.blog }} target="_blank">Blog<i
+                                    class="fas fa-chevron-right pl-2 text-gray-400"></i></a>
                         {% endif %}
 
                         {% if user.birthdate|date:"md" == today|date:"md" %}
@@ -166,10 +169,14 @@
                 <div class="m-4 p-4 rounded shadow bg-white">
 
                     <p class="font-medium text-lg pb-2">Links</p>
-                    <a href="http://www.sogang.ac.kr/" target="_blank"><p class="flex items-center"><i class="fas fa-university text-xl pl-0.5 pr-2.5 text-indigo-400"></i>Sogang Univ.</p></a>
-                    <a href="http://cyber.sogang.ac.kr/" target="_blank"><p class="flex items-center"><i class="fas fa-book-open pr-3 pl-0.5 text-mint"></i>Cyber Campus</p></a>
-                    <a href="https://github.com/" target="_blank"><p class="flex items-center"><i class="fab fa-github text-xl pr-3 pl-0.5"></i>GitHub</p></a>
-                    <a href="https://www.acmicpc.net/" target="_blank"><p class="flex items-center"><i class="fab fa-bootstrap text-xl text-blue-500 pr-3 pl-0.5"></i>BOJ</p></a>
+                    <a href="http://www.sogang.ac.kr/" target="_blank"><p class="flex items-center"><i
+                            class="fas fa-university text-xl pl-0.5 pr-2.5 text-indigo-400"></i>Sogang Univ.</p></a>
+                    <a href="http://cyber.sogang.ac.kr/" target="_blank"><p class="flex items-center"><i
+                            class="fas fa-book-open pr-3 pl-0.5 text-mint"></i>Cyber Campus</p></a>
+                    <a href="https://github.com/" target="_blank"><p class="flex items-center"><i
+                            class="fab fa-github text-xl pr-3 pl-0.5"></i>GitHub</p></a>
+                    <a href="https://www.acmicpc.net/" target="_blank"><p class="flex items-center"><i
+                            class="fab fa-bootstrap text-xl text-blue-500 pr-3 pl-0.5"></i>BOJ</p></a>
 
 
                     <div class="main_search mt-4">
@@ -179,6 +186,26 @@
                         </form>
                     </div>
 
+                </div>
+            {% else %}
+                <div class="m-4 p-4 rounded shadow bg-white">
+
+                    <p class="font-medium text-lg pb-2">Login to view posts & more information.</p>
+                    <a href="{% url "core:about" %}" class="hover:underline text-mint-dark"><i
+                            class="far fa-question-circle pr-1.5"></i>About</a>
+
+                </div>
+                <div class="m-4 p-4 rounded shadow bg-white">
+
+                    <p class="font-medium text-lg pb-2">Links</p>
+                    <a href="http://www.sogang.ac.kr/" target="_blank"><p class="flex items-center"><i
+                            class="fas fa-university text-xl pl-0.5 pr-2.5 text-indigo-400"></i>Sogang Univ.</p></a>
+                    <a href="http://cyber.sogang.ac.kr/" target="_blank"><p class="flex items-center"><i
+                            class="fas fa-book-open pr-3 pl-0.5 text-mint"></i>Cyber Campus</p></a>
+                    <a href="https://github.com/" target="_blank"><p class="flex items-center"><i
+                            class="fab fa-github text-xl pr-3 pl-0.5"></i>GitHub</p></a>
+                    <a href="https://www.acmicpc.net/" target="_blank"><p class="flex items-center"><i
+                            class="fab fa-bootstrap text-xl text-blue-500 pr-3 pl-0.5"></i>BOJ</p></a>
                 </div>
 
             {% endif %}

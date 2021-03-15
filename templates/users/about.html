@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block page_title %}
-    Rank
+    About
 {% endblock page_title %}
 
 {% block content %}
@@ -33,8 +33,134 @@
     {% endif %}
 
     <div class="mx-2 sm:mx-0">
-        <p class="font-medium text-3xl text-mint-dark pb-4">About</p>
-        fldjbsfdsa
+        <p class="font-medium text-3xl text-mint-dark pb-4 pl-4">About</p>
+
+        <div class="rounded shadow-neu bg-white p-4 mb-8 font-light">
+            <svg
+                    height="6rem"
+                    width="100%"
+                    stroke="black"
+                    stroke-width="1"
+                    class="text-line"
+            >
+                <defs>
+                    <style type="text/css">
+                        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+                    </style>
+                </defs>
+                <text
+                        style="
+									font-family: 'Ubuntu', sans-serif;
+									font-weight: normal;
+									font-weight: 500;
+									font-style: normal;
+								"
+                        x="0"
+                        y="1em"
+                        fill="none"
+                        font-size="4rem"
+                >
+                    <tspan dy="0" x="0">ssadam</tspan>
+                </text>
+
+            </svg>
+
+            <svg
+                    height="6rem"
+                    width="100%"
+                    stroke="black"
+                    stroke-width="1"
+                    class="text-fill"
+            >
+                <defs>
+                    <style type="text/css">
+                        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap');
+                    </style>
+                </defs>
+                <text
+                        style="
+									font-family: 'Ubuntu', sans-serif;
+									font-weight: normal;
+									font-weight: 500;
+									font-style: normal;
+								"
+                        x="0"
+                        y="1em"
+                        fill="none"
+                        font-size="1.2rem"
+                >
+                    <tspan dy="0" x="0">Sogang Computer Science & Engineering</tspan>
+                    <tspan dy="1.4em" x="0">사람들을 위한 사담(私談)방</tspan>
+                </text>
+
+            </svg>
+
+            <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+            <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
+            <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+            <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+            <div class="swiper-container w-full h-4/5">
+                <div class="swiper-wrapper">
+                    <img src="{% static 'img/about/1.jpeg' %}" class="swiper-slide object-contain"
+                         style="max-height: 36rem">
+                    <img src="{% static 'img/about/2.jpeg' %}" class="swiper-slide object-contain"
+                         style="max-height: 36rem">
+                    <img src="{% static 'img/about/3.jpeg' %}" class="swiper-slide object-contain"
+                         style="max-height: 36rem">
+                    <img src="{% static 'img/about/4.jpeg' %}" class="swiper-slide object-contain"
+                         style="max-height: 36rem">
+                    <img src="{% static 'img/about/5.jpeg' %}" class="swiper-slide object-contain"
+                         style="max-height: 36rem">
+                    <img src="{% static 'img/about/6.jpeg' %}" class="swiper-slide object-contain"
+                         style="max-height: 36rem">
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+
+            <script type="text/javascript">
+
+                var mySwiper = new Swiper('.swiper-container', {
+                    slidesPerView: 1, //슬라이드를 한번에 3개를 보여준다
+                    spaceBetween: 20, //슬라이드간 padding 값 30px 씩 떨어뜨려줌
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+
+            </script>
+
+            <p class="text-lg font-medium pt-8">만든이</p>
+            Nickname: kevink1113<br/>
+            강상원 (컴공 19)<br/><br/>
+            kevink1113@u.sogang.ac.kr
+            <p>
+                <a class="hover:underline text-mint-dark" href="https://kevink1113.com" target="_blank"
+                   title="kevink1113 HomePage">HomePage</a>
+                <a class="hover:underline text-mint-dark" href="https://www.linkedin.com/in/kevink1113" target="_blank"
+                   title="강상원 LinkedIn">LinkedIn</a>
+                <a class="hover:underline text-mint-dark" href="https://kevink1113.tistory.com" target="_blank"
+                   title="Blog">Blog</a>
+            </p>
+            <p class="my-6 text-xs">기타 문의 / 건의 사항이 있을 경우 게시글을 작성하거나 kevink1113@u.sogang.ac.kr로 메일 보내주세요.
+                <span class="text-gray-400">(바빠서 자주 확인은 못합니다 ㅠㅠ)</span></p>
+
+            <p class="mx-auto text-center">
+                <a href="{% url 'core:home' %}" class="btn bg-mint text-white px-10">홈 화면으로<i
+                        class="fas fa-chevron-right pl-3 my-10"></i></a>
+            </p>
+        </div>
+
 
     </div>
 {% endblock content %}
