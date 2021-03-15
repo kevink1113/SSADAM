@@ -5,4 +5,5 @@ app_name = "core"
 
 urlpatterns = [
     path("", user_views.UserView, name="home"),
+    path("about/", user_views.About, name="about")
 ]

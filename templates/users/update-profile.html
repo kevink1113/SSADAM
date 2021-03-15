@@ -47,6 +47,7 @@
             <button class="btn bg-mint text-white">Update Profile</button>
         </form>
         <a href="{% url 'users:password' %}" class="text-teal-500 font-medium mt-6">Change Password</a>
+        <a href="{% url 'users:delete' %}" onclick="return confirm('정말로 탈퇴할까요? 사용자 정보 및 작성한 모든 게시물, 댓글이 삭제됩니다. (사용자 표시 여부를 체크 해제하여 프로필 숨김 처리도 가능합니다.)')" class="text-red-400 font-medium mt-6">Delete Account</a>
     </div>
 
 {% endblock content %}

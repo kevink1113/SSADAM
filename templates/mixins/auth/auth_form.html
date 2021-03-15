@@ -1,3 +1,4 @@
+{% load static %}
 <form method="POST" class="w-full" enctype="multipart/form-data">
     {% csrf_token %}
 
@@ -10,6 +11,13 @@
     {% for field in form %}
         {% include 'mixins/auth/form_input.html' with field=field %}
     {% endfor %}
+    <p class="text-xs text-center justify-center pb-2">
+        Sign Up 버튼을 클릭하면
+        <a href="{% static 'terms.html' %}" class="text-mint-dark font-bold"
+           onclick="window.open(this.href, '_blank', 'width=400px,height=400px,toolbars=no'); return false;">사용자 약관,
+            개인정보 취급방침</a>
+        에 동의하는 것으로 간주됩니다.
+    </p>
 
     <button class="btn bg-mint text-white">{{ cta }}</button>
 </form>

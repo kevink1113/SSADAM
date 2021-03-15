@@ -11,4 +11,5 @@ urlpatterns = [
     path("update-profile", views.UpdateProfileView.as_view(), name="update"),
     path("update-password", views.UpdatePasswordView.as_view(), name="password"),
     path("rank", views.rank, name="rank"),
+    path("delete", views.UserDelete, name="delete")
 ]

@@ -29,6 +29,18 @@ class LoginView(View):
         pass
 
 
+def UserDelete(request):
+    try:
+        user = request.user
+        user.delete()
+        return redirect('/')
+    except Exception:
+        print("Could not delete user.\n")
+
+
+def About(request):
+    return render(request, "users/about.html")
+
 @login_required
 def UserDetail(request, pk):
     user = models.User.objects.get(pk=pk)
