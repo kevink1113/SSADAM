@@ -78,7 +78,13 @@
                         {% endif %}
                     </td>
                     <td class="text-xs border-l text-center">{{ post.like_sum }}</td>
-                    <td class="text-xs border-l text-center">{{ post.created | date:"H:i" }}</td>
+                    <td class="text-xs border-l text-center">
+                        {% if today|date:"ymd" == post.created|date:"ymd" %}
+                               {{ post.created | date:"H:i"}}
+                            {% else %}
+                                {{ post.created | date:"m/j"}}
+                            {% endif %}
+                    </td>
                     <td class="text-xs border-l text-center">{{ post.view_count }}</td>
 
 

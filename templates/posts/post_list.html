@@ -119,8 +119,6 @@
                 {% for post in posts %}
                     <tr class="border-b border-gray-200 h-10 hover:bg-mint-light">
 
-                        <a href="{% url "posts:detail" post.pk %}">
-
                         <td class="px-3 text-xs sm:text-base cursor-pointer" onclick="location.href='{% url "posts:detail" post.pk %}'">
                             {% if post.user == request.user %}
                                 <i class="fas fa-user text-mint pr-0.5"></i>
@@ -146,7 +144,13 @@
                             {% endif %}
                         </td>
                         <td class="text-xs border-l text-center">{{ post.like_sum }}</td>
-                        <td class="text-xs border-l text-center">{{ post.created | date:"H:i"}}</td>
+                        <td class="text-xs border-l text-center">
+                            {% if today|date:"ymd" == post.created|date:"ymd" %}
+                               {{ post.created | date:"H:i"}}
+                            {% else %}
+                                {{ post.created | date:"m/j"}}
+                            {% endif %}
+                        </td>
                         <td class="text-xs border-l text-center">{{ post.view_count }}</td>
                     </tr>
                 {% endfor %}
