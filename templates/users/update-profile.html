@@ -9,6 +9,8 @@
 
 {% block content %}
     <div class="container lg:w-3/5 mx-auto my-10 flex flex-col items-center border p-6 border-gray-400 bg-white">
+        <p class="text-2xl font-bold text-mint-dark pb-3">정보 수정</p>
+        <p class="pb-4 text-lg">기입한 정보는 사용자 상세 페이지에 나타납니다. 공유하고 싶은 정보를 입력하세요.</p>
         <form method="POST" action="{% url "users:update" %}" enctype="multipart/form-data">
             {% csrf_token %}
             {# {{ form.as_p }} #}
@@ -29,7 +31,7 @@
             </div>
             <div class="p-2 mb-4 rounded-lg shadow-lg">
                 <p class="pr-4 text-2xl font-light mb-2">개인 정보</p>
-                <div class="flex"><span class="pr-4">체크 해제시 홈 화면 사용자 목록에서 숨김 처리 <i class="fas fa-arrow-right"></i></span>{{ form.is_real }}</div>
+                <div class="flex"><span class="pr-4">사용자 표시 여부 (체크 해제시 홈 화면 사용자 목록에서 숨김 처리) <i class="fas fa-arrow-right"></i></span>{{ form.is_real }}</div>
                 {{ form.last_name }}
                 {{ form.first_name }}
                 {{ form.username }}
