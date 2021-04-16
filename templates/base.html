@@ -14,10 +14,21 @@
     <meta property="og:image" content="{% static 'img/og_image.png' %}"/>
     <meta property="og:description" content="Practicing involuntary social distancing."/>
 
-    <meta name="google-site-verification" content="-b4GgDSFYtyzY-GdMtXxYNXLA3PugFB5oWDtimVawG4" />
-
+    <meta name="google-site-verification" content="-b4GgDSFYtyzY-GdMtXxYNXLA3PugFB5oWDtimVawG4"/>
     <link rel="icon" href="{% static 'img/icon.png' %}"/>
     <link rel="apple-touch-icon" href="{% static 'img/apple-touch-icon.png' %}"/>
+
+    <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/vs2015.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script> hljs.initHighlightingOnLoad(); </script>
+    <script> $(document).ready(function () {
+        $('pre:not(:has(code))').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
+    }); </script>
+
 </head>
 <body class="container mt-28 md:w-9/12 sm:w-11/12 xs mx-auto">
 <header class="container inset-0 flex fixed w-screen z-50 max-w-full flex items-center justify-between px-6 h-14 border-b border-gray-400 header">
