@@ -3,7 +3,9 @@
 
 ### (Custom community website)
 
-##### By Django, Tailwind CSS, Gulp (Responsive)
+##### Developed by Django, Tailwind CSS, Gulp (Responsive)
+
+##### Deployed by uwsgi, nginx on AWS EC2 server. 
 
 [🔗 ssadam (ssadam.com)](http://ssadam.com/)
 [ℹ️ About Page](http://ssadam.com/about/)
