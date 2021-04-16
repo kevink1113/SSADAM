@@ -163,6 +163,12 @@ SUMMERNOTE_CONFIG = {
 
         # Toolbar customization
         # https://summernote.org/deep-dive/#custom-toolbar-popover
+        # 'js': ( '/static/js/summernote-ext-highlight.js', ),
+        # 'js_for_inplace': (  '/static/js/summernote-ext-highlight.js', ),
+        'codemirror': {
+            'mode': 'htmlmixed',
+            'lineNumbers': 'true',
+        },
         'toolbar': [
             ['style', ['style']],
             ['font', ['bold', 'underline', 'clear']],
@@ -173,7 +179,6 @@ SUMMERNOTE_CONFIG = {
             ['insert', ['link', 'picture', 'video', 'file']],
             ['view', ['fullscreen', 'codeview', 'help']],
         ],
-
         # Or, explicitly set language/locale for editor
         'lang': 'ko-KR',
         'disable_attachment': False,
