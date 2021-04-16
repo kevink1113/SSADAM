@@ -196,7 +196,8 @@
                             </div>
                         {% endfor %}
 
-                        <form action="{% url 'comments:new_comment' post.pk %}" method="post" class="flex border-t border-gray-200 pt-3">
+                        <form action="{% url 'comments:new_comment' post.pk %}" method="post"
+                              class="flex border-t border-gray-200 pt-3">
                             {% csrf_token %}
                             <textarea name="content" id="content" class="h-16 w-full"></textarea>
                             <button class="bg-red-500 w-20 h-16 ml-3 rounded text-white bg-mint">댓글 작성</button>
@@ -217,3 +218,4 @@
         </div>
     {% endif %}
 {% endblock %}
+
